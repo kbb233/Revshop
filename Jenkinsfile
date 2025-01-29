@@ -13,6 +13,13 @@ pipeline {
                 }
             }
         }
+        stage('Verify Compiled Classes') {
+            steps {
+                script {
+                    sh 'ls -la target/classes'  
+                }
+            }
+        }
         stage('SonarQube Analysis') {
             steps {
                 script {
