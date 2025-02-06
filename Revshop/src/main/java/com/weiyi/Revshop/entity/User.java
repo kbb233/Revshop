@@ -6,6 +6,9 @@ import java.util.Collections;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,9 +18,6 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(nullable = false, unique = true)
-    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -32,6 +32,7 @@ public class User implements UserDetails{
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private BuyerProfile buyerProfile;
 
+    
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private SellerProfile sellerProfile;
 
@@ -78,11 +79,7 @@ public class User implements UserDetails{
     
     @Override
     public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+        return this.email;
     }
 
     public String getPassword() {
