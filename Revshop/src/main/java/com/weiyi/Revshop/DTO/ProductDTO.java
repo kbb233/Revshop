@@ -1,5 +1,8 @@
 package com.weiyi.Revshop.DTO;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.weiyi.Revshop.entity.Product;
 
 public class ProductDTO {
@@ -13,6 +16,7 @@ public class ProductDTO {
     private int threshold;
     private String imageUrl;
     private Long sellerId;
+    private List<ReviewDTO> reviews;
     
     public ProductDTO(Product product) {
         this.id = product.getId();
@@ -25,6 +29,17 @@ public class ProductDTO {
         this.threshold = product.getThreshold();
         this.imageUrl = product.getImageUrl();
         this.sellerId = product.getSeller().getId(); 
+        this.reviews = product.getReviews().stream()
+                .map(ReviewDTO::new)  
+                .collect(Collectors.toList());
+    }
+
+    public List<ReviewDTO> getReviews() {
+        return this.reviews;
+    }
+
+    public void setReviews(List<ReviewDTO> reviews) {
+        this.reviews = reviews;
     }
 
     public Long getId() {

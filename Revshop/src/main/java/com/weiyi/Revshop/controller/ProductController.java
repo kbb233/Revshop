@@ -61,6 +61,16 @@ public class ProductController {
         return ResponseEntity.ok(productDTOs);
     }
 
+    //get seller product
+    @GetMapping("/all")
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+        List<ProductDTO> productDTOs = products.stream()
+            .map(ProductDTO::new)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(productDTOs);
+    }
+
     //update seller product
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateProduct(@PathVariable("id") Long productId, @RequestBody Product updatedProduct) {
@@ -76,9 +86,12 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword) {
+    public ResponseEntity<List<ProductDTO>> searchProducts(@RequestParam String keyword) {
         List<Product> products = productService.searchProducts(keyword);
-        return ResponseEntity.ok(products);
+        List<ProductDTO> productDTOs = products.stream()
+            .map(ProductDTO::new)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(productDTOs);
     }
 
     @PostMapping("/create")
