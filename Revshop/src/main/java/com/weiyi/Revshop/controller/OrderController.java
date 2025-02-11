@@ -2,7 +2,7 @@ package com.weiyi.Revshop.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,38 +11,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.weiyi.Revshop.entity.Order;
+import com.weiyi.Revshop.DTO.OrderItemDTO;
+import com.weiyi.Revshop.DTO.OrderRequest;
+
 import com.weiyi.Revshop.service.OrderService;
 
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
     
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
 
-    //place a new order
-    @PostMapping
-    public ResponseEntity<Order> placeOrder(@RequestBody Order order) {
-        Order placedOrder = orderService.placeOrder(order);
-        return ResponseEntity.ok(placedOrder);
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        Order order = orderService.getOrderById(id);
-        return ResponseEntity.ok(order);
+    @PostMapping("/create")
+    public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest) {
+        System.out.println("Received Order Request: " + orderRequest);
+        System.out.println("Buyer ID: " + orderRequest.getBuyer_id());
+        System.out.println("Order Items: " + orderRequest.getOrderItems());
+
+        if (orderRequest.getBuyer_id() == null || orderRequest.getOrderItems().isEmpty()) {
+            return ResponseEntity.badRequest().body("Missing buyerId or order items.");
+        }
+        for (OrderItemDTO item : orderRequest.getOrderItems()) {
+        System.out.println("Order Item - Product ID: " + item.getProduct_id());
+        if (item.getProduct_id() == null) {
+            return ResponseEntity.badRequest().body("Product ID is missing in an order item.");
+            }
+        }
+        return ResponseEntity.ok(orderService.createOrder(orderRequest));
     }
 
     @GetMapping("/buyer/{buyerId}")
-    public ResponseEntity<List<Order>> getOrdersByBuyerId(@PathVariable Long buyerId) {
-        List<Order> orders = orderService.getOrdersByBuyerId(buyerId);
-        return ResponseEntity.ok(orders);
-    }
-    
-    @GetMapping("/seller/{sellerId}")
-    public ResponseEntity<List<Order>> getOrdersBySellerId(@PathVariable Long sellerId) {
-        List<Order> orders = orderService.getOrdersBySellerId(sellerId);
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<List<OrderRequest>> getOrdersByBuyer(@PathVariable Long buyerId) {
+        return ResponseEntity.ok(orderService.getOrdersByBuyer(buyerId));
     }
 }

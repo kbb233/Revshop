@@ -34,7 +34,7 @@ const BuyerPage: React.FC = () => {
             })
             .catch(error => {
                 console.error("Error fetching buyer profile:", error);
-                if (error.response && error.response.status === 404) {
+                if (error.response && error.response.status === 403) {
                     console.log("Buyer profile not found. Creating profile...");
                     axios.post(`${baseURL}/create`, { userId }, { withCredentials: true })
                         .then(createResponse => {

@@ -35,7 +35,7 @@ const SellerPage: React.FC = () => {
         }, { headers: { Authorization: `Bearer ${token}` },
             withCredentials: true })
         .then(response => {
-            localStorage.setItem("seller_id", response.data.Id);
+            localStorage.setItem("seller_id", response.data.id);
             console.log("✅ Seller ID stored:", response.data.id);
             navigate("/createProducts");
             }

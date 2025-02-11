@@ -27,10 +27,6 @@ public class Order {
     @JoinColumn(name = "buyer_id", nullable = false)
     private BuyerProfile buyer;
 
-    @ManyToOne
-    @JoinColumn(name = "seller_id", nullable = false)
-    private SellerProfile seller;
-
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
 
@@ -62,14 +58,6 @@ public class Order {
 
     public void setBuyer(BuyerProfile buyer) {
         this.buyer = buyer;
-    }
-
-    public SellerProfile getSeller() {
-        return this.seller;
-    }
-
-    public void setSeller(SellerProfile seller) {
-        this.seller = seller;
     }
 
     public List<OrderItem> getOrderItems() {

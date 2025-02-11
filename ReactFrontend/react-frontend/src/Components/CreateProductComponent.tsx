@@ -27,7 +27,7 @@ const CreateProductComponent: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const token = localStorage.getItem("jwt");
-
+        console.log(localStorage.getItem("seller_id"));
         if (!token) {
             console.error("User is not authenticated!");
             return;

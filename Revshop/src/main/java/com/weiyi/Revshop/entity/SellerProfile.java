@@ -28,9 +28,6 @@ public class SellerProfile {
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
 
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Order> orders = new ArrayList<>();
-
 
     public Long getId() {
         return this.id;
@@ -71,13 +68,5 @@ public class SellerProfile {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
-
-    public List<Order> getOrders() {
-        return this.orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-    
+   
 }
