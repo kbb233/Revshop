@@ -33,7 +33,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/login", "/api/users/register",
                 "/api/sellers/updateProfile","/api/sellers/profile/{userId}",
-                "/api/products/**","/uploads/**","/api/buyers/**","/api/orders/**"
+                "/api/products/**","/uploads/**","/api/buyers/**","/api/orders/**",
+                "/api/reviews/**"
                 ).permitAll() 
                 .anyRequest().authenticated()
             )

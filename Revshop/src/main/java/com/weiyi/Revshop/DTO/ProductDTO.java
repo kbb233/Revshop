@@ -30,7 +30,12 @@ public class ProductDTO {
         this.imageUrl = product.getImageUrl();
         this.sellerId = product.getSeller().getId(); 
         this.reviews = product.getReviews().stream()
-                .map(ReviewDTO::new)  
+                .map(review-> new ReviewDTO(
+                    review.getProduct().getId(),
+                    review.getBuyer().getId(),
+                    review.getComment(),
+                    review.getRating()
+                    )) 
                 .collect(Collectors.toList());
     }
 

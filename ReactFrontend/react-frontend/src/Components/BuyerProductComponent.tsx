@@ -11,7 +11,7 @@ interface BuyerProductProps {
     category: string;
     discountedPrice: number;
     imageUrl: string;
-    reviews: { user: string; comment: string; rating: number }[];
+    reviews: { product_id: number;buyer_id:number; comment: string; rating: number }[];
   };
 }
 
@@ -77,7 +77,7 @@ const BuyerProductComponent: React.FC<BuyerProductProps> = ({ product }) => {
         {product.reviews.length > 0 ? (
           product.reviews.map((review, index) => (
             <p key={index}>
-              <strong>{review.user}:</strong> {review.comment} ({review.rating}/5)
+              <strong>Buyer {review.buyer_id}:</strong> {review.comment} ({review.rating}/5)
             </p>
           ))
         ) : (

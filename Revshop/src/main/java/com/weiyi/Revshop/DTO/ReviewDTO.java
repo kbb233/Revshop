@@ -1,35 +1,35 @@
 package com.weiyi.Revshop.DTO;
 
-import com.weiyi.Revshop.entity.Review;
-
 public class ReviewDTO {
-    private Long id;
-    private String reviewerName;
+    private Long product_id;
+    private Long buyer_id;
     private String comment;
     private int rating;
 
-    public ReviewDTO(Review review) {
-        this.id = review.getId();
-        this.reviewerName = review.getBuyer().getUser().getEmail(); 
-        this.comment = review.getComment();
-        this.rating = review.getRating();
+
+    public ReviewDTO(Long product_id, Long buyer_id, String comment, int rating) {
+        this.product_id = product_id;
+        this.buyer_id = buyer_id;
+        this.comment = comment;
+        this.rating = rating;
     }
 
-    public Long getId() {
-        return id;
+    public Long getProduct_id() {
+        return this.product_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProduct_id(Long product_id) {
+        this.product_id = product_id;
     }
 
-    public String getReviewerName() {
-        return reviewerName;
+    public Long getBuyer_id() {
+        return this.buyer_id;
     }
 
-    public void setReviewerName(String reviewerName) {
-        this.reviewerName = reviewerName;
+    public void setBuyer_id(Long buyer_id) {
+        this.buyer_id = buyer_id;
     }
+
 
     public String getComment() {
         return comment;
