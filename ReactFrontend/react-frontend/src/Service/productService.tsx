@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:8080/api/products"; // Adjust your backend API URL
+const baseURL = "http://localhost:8080/api/products"; 
+const FAVORITE_API_URL = "http://localhost:8080/api/favorites";
 
 // Fetch all products by seller ID
 export const fetchProductsBySeller = async (sellerId: number) => {
@@ -55,10 +56,28 @@ export const addToCart = async (productId: number, quantity: number) => {
 };
 
 // Add product to favorites
-export const addToFavorites = async (productId: number) => {
+export const addToFavorites = async (buyerId:number,productId: number) => {
   try {
-    await axios.post(`${baseURL}/favorites/add`, { productId }, { withCredentials: true });
+    await axios.post(`${FAVORITE_API_URL}/add`, {buyerId, productId }, { withCredentials: true });
   } catch (error) {
     console.error("Error adding to favorites:", error);
+  }
+};
+
+export const getFavoriteProducts = async (buyerId:number) => {
+  try {
+    const response =await axios.get(`${FAVORITE_API_URL}/${buyerId}`, { withCredentials: true });
+    return response.data;
+  } catch (error) {
+    console.error("Error getting buyer favorites", error);
+    return [];
+  }
+};
+
+export const removeFavorite = async (buyerId:number,productId: number) => {
+  try {
+    await axios.delete(`${FAVORITE_API_URL}/delete/${buyerId}/${productId}`, { withCredentials: true });
+  } catch (error) {
+    console.error("Error delete the favorite:", error);
   }
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addToCart, addToFavorites } from "../Service/productService";
+import { addToFavorites } from "../Service/productService";
 import cartService from "../Service/cartService";
 
 interface BuyerProductProps {
@@ -17,6 +17,7 @@ interface BuyerProductProps {
 
 const BuyerProductComponent: React.FC<BuyerProductProps> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
+  const buyerId = Number(localStorage.getItem("buyer_id"));
 
   const handleAddToCart = () => {
     cartService.addToCart(product, quantity);
@@ -24,7 +25,8 @@ const BuyerProductComponent: React.FC<BuyerProductProps> = ({ product }) => {
   };
 
   const handleAddToFavorites = () => {
-    addToFavorites(product.id);
+    addToFavorites(buyerId,product.id);
+    console.log(`${buyerId} and ${product.id}`)
     alert("Added to favorites!");
   };
 
