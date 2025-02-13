@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import cartService from "../Service/cartService";
 
 interface FavoriteProductProps {
   product: {
@@ -16,6 +17,11 @@ interface FavoriteProductProps {
 
 const BuyerFavoriteComponent: React.FC<FavoriteProductProps> = ({ product, onRemoveFavorite }) => {
   const baseURL = "http://localhost:8080/";
+  const [quantity, setQuantity] = useState(1);
+  const handleAddToCart = () => {
+      cartService.addToCart(product, quantity);
+      alert("Added to cart!");
+    };
 
   return (
     <div style={{ border: "1px solid #ccc", padding: "15px", margin: "10px", borderRadius: "8px" }}>
@@ -40,11 +46,26 @@ const BuyerFavoriteComponent: React.FC<FavoriteProductProps> = ({ product, onRem
           <span>${product.price}</span>
         )}
       </p>
+
+      <div>
+        <label>Quantity:</label>
+        <input
+          type="number"
+          min="1"
+          value={quantity}
+          onChange={(e) => setQuantity(parseInt(e.target.value))}
+          style={{ width: "40px", marginLeft: "5px" }}
+        />
+      </div>
+        <br/>
+      <button onClick={handleAddToCart} style={{ marginRight: "5px", padding: "5px", cursor: "pointer"}}>
+          🛒 Add to Cart
+        </button>
       <button
         onClick={() => onRemoveFavorite(product.id)}
-        style={{ backgroundColor: "red", color: "white", padding: "8px", border: "none", borderRadius: "5px" }}
+        style={{ marginRight: "5px", padding: "5px", cursor: "pointer"  }}
       >
-        Remove from Favorite
+        ❌ Remove from Favorite
       </button>
     </div>
   );
